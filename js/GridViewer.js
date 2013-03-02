@@ -6,6 +6,7 @@ function GridViewer(gridSet) {
 	this.width;
 	this.height;
 	this.gridHeight;
+	this.gridWidth;
 	this.padding;
 	
 	//dom elements
@@ -53,7 +54,8 @@ GridViewer.prototype.setViewPort = function GridViewer_setViewPort(gridSet) {
 	this.canvas.width = this.width;
 	this.canvas.height = this.height;
 	
-	this.gridHeight = Math.round(this.height / gridSet.gridList.length);
+	this.gridHeight = Math.round(this.height / (gridSet.depth + 1));
+	this.gridWidth = Math.round(this.width / 2);
 	this.padding = Math.round(this.height / 60);
 }
 
@@ -65,23 +67,26 @@ GridViewer.prototype.updateGridSet = function GridViewer_updateGridSet(gridSet) 
 }
 
 GridViewer.prototype.updateGrid = function GridViewer_updateGrid(grid, gridCount, derivativeDepth) {
-	var currentGridOffset = (grid.derivativeDepth + derivativeDepth) * this.gridHeight;
+	var currentGridOffset = (grid.derivativeDepth + derivativeDepth-1) * this.gridHeight;
 	var currentGridOffsetCenter = currentGridOffset + this.gridHeight / 2;
 	
-	this.context.lineWidth = 2
-	this.context.strokeStyle = '#888';
+	this.context.lineWidth = 1;
+	if (grid.derivativeDepth == 0)
+		this.context.strokeStyle = '#000000';
+	else
+		this.context.strokeStyle = '#888888';
 
 	//X axis
 	this.context.beginPath();
 	this.context.moveTo(this.padding, currentGridOffsetCenter);
-	this.context.lineTo(this.width - this.padding, currentGridOffsetCenter);
-	this.context.closePath();
+	this.context.lineTo(this.gridWidth - this.padding, currentGridOffsetCenter);
+	/*this.context.closePath();*/
 	this.context.stroke();
 	
 	//Y axis
 	this.context.beginPath();
 	this.context.moveTo(this.padding, currentGridOffset + this.padding);
 	this.context.lineTo(this.padding, currentGridOffset + this.gridHeight - this.padding);
-	this.context.closePath();
+	/*this.context.closePath();*/
 	this.context.stroke();
 }
