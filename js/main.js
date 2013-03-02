@@ -7,8 +7,15 @@ var gridViewer;
 function main()
 {
 	mathLogic = new MathLogic();
-	gridSet = new GridSet(3);
-	gridViewer = new GridViewer();
+	gridSet = new GridSet(2);
+	gridViewer = new GridViewer(gridSet);
 	
-	gridViewer.update(gridSet);
+	window.onresize = resizeHandler;
+	
+	gridViewer.updateGridSet(gridSet);
+}
+
+function resizeHandler(e) {
+	gridViewer.setViewPort(gridSet);
+	gridViewer.updateGridSet(gridSet);
 }

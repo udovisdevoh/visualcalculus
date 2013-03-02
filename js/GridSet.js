@@ -1,5 +1,5 @@
 function GridSet(depth) {
-	//Grids
+	this.depth = depth;
 	this.gridList = new Array();
 	
 	this.gridList.push(new Grid(0));//f(x)
@@ -8,7 +8,4 @@ function GridSet(depth) {
 		this.gridList.push(new Grid(i)); //f'(x)
 		this.gridList.push(new Grid(-i)); //ʃ(x)
 	}
-}
-
-GridSet.prototype.update = function GridSet_update() {
 }
