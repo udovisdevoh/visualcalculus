@@ -1,0 +1,15 @@
+body
+{
+	font-family:Verdana, Verdana, Geneva, sans-serif;
+	font-size:14px;
+}
+
+a, .Link {
+	color:#0077ca;
+	text-decoration:none;
+}
+a:hover, .Link:hover {
+	color:#003d68;
+	cursor:pointer;
+	text-decoration:none;
+}
