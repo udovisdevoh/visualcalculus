@@ -67,26 +67,42 @@ GridViewer.prototype.updateGridSet = function GridViewer_updateGridSet(gridSet) 
 }
 
 GridViewer.prototype.updateGrid = function GridViewer_updateGrid(grid, gridCount, derivativeDepth) {
-	var currentGridOffset = (grid.derivativeDepth + derivativeDepth-1) * this.gridHeight;
-	var currentGridOffsetCenter = currentGridOffset + this.gridHeight / 2;
+	var currentGridOffsetY = (grid.derivativeDepth + derivativeDepth-1) * this.gridHeight;
+	var currentGridOffsetCenterY = currentGridOffsetY + this.gridHeight / 2;
+	var currentGridOffsetX = 0;
 	
 	this.context.lineWidth = 1;
 	if (grid.derivativeDepth == 0)
 		this.context.strokeStyle = '#000000';
 	else
-		this.context.strokeStyle = '#888888';
+		this.context.strokeStyle = '#555555';
+		
+	if (Math.abs(grid.derivativeDepth) >=2) {
+		this.context.strokeStyle = '#CCCCCC';
+		currentGridOffsetX = this.gridWidth;
+		
+		while (currentGridOffsetY < 0) {
+			currentGridOffsetY += this.gridHeight;
+			currentGridOffsetCenterY += this.gridHeight;
+		}
+		
+		while (currentGridOffsetY + this.gridHeight -1 > this.height) {
+			currentGridOffsetY -= this.gridHeight;
+			currentGridOffsetCenterY -= this.gridHeight;
+		}
+	}	
 
 	//X axis
 	this.context.beginPath();
-	this.context.moveTo(this.padding, currentGridOffsetCenter);
-	this.context.lineTo(this.gridWidth - this.padding, currentGridOffsetCenter);
+	this.context.moveTo(currentGridOffsetX + this.padding, currentGridOffsetCenterY);
+	this.context.lineTo(currentGridOffsetX + this.gridWidth - this.padding, currentGridOffsetCenterY);
 	/*this.context.closePath();*/
 	this.context.stroke();
 	
 	//Y axis
 	this.context.beginPath();
-	this.context.moveTo(this.padding, currentGridOffset + this.padding);
-	this.context.lineTo(this.padding, currentGridOffset + this.gridHeight - this.padding);
+	this.context.moveTo(currentGridOffsetX + this.padding, currentGridOffsetY + this.padding);
+	this.context.lineTo(currentGridOffsetX + this.padding, currentGridOffsetY + this.gridHeight - this.padding);
 	/*this.context.closePath();*/
 	this.context.stroke();
 }
