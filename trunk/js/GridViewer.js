@@ -66,6 +66,15 @@ GridViewer.prototype.updateGridSet = function GridViewer_updateGridSet(gridSet) 
 	}
 }
 
+GridViewer.prototype.isInVisibleBoundOfMainGrid = function GridViewer_isInVisibleBoundOfMainGrid(x, y) {
+	var topBound = this.gridHeight + this.padding;
+	var bottomBound = topBound + this.gridHeight - this.padding * 2;
+	var leftBound = this.padding;
+	var rightBound = leftBound + this.gridWidth - this.padding * 2;
+	
+	return y >= topBound && y <= bottomBound && x >= leftBound && x <= rightBound;
+}
+
 GridViewer.prototype.updateGrid = function GridViewer_updateGrid(grid, gridCount, derivativeDepth) {
 	var currentGridOffsetY = (grid.derivativeDepth + derivativeDepth-1) * this.gridHeight;
 	var currentGridOffsetCenterY = currentGridOffsetY + this.gridHeight / 2;
